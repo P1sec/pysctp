@@ -93,4 +93,4 @@ This module is licensed under the LGPL license.
 
 Elvis Pfützenreuter <elvis.pfutzenreuter@indt.org.br>
 Casimiro Daniel NPRI <CasimiroD@npt.nuwc.navy.mil> - patch for new SCTP_* constants
-
+Philippe Langlois <Phil@p1sec.com> - patch for Mac OS X support, Python distutils packaging, GIT open repository
