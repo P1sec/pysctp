@@ -54,6 +54,10 @@ to avoid excessive namespace pollution.
 import socket
 import _sctp
 
+import datetime
+import time
+import os
+
 ####################################### CONSTANTS
 
 # bindx() constants
@@ -1015,6 +1019,8 @@ class sctpsocket(object):
 		self.initparams = initparams(self)
 		self.events = event_subscribe(self)
 
+		self.datalogging = False
+
 	def bindx(self, sockaddrs, action=BINDX_ADD):
 		"""
 		Binds to a list of addresses. This method() allows to bind to any subset 
@@ -1085,7 +1091,7 @@ class sctpsocket(object):
 
 		return _sctp.getladdrs(self._sk.fileno(), assoc_id)
 
-	def sctp_send(self, msg, to=("",0), ppid=0, flags=0, stream=0, timetolive=0, context=0):
+	def sctp_send(self, msg, to=("",0), ppid=0, flags=0, stream=0, timetolive=0, context=0, record_file_prefix="RECORD_sctp_traffic", datalogging = False):
 		"""
 		Sends a SCTP message. While send()/sendto() can also be used, this method also
 		accepts some SCTP-exclusive metadata. Parameters:
@@ -1127,6 +1133,15 @@ class sctpsocket(object):
 		both by the implementation and by the transmission buffer (SO_SNDBUF).
 		The application must configure this buffer accordingly.
 		"""
+		if datalogging == True or self.datalogging == True:
+			now = datetime.datetime.now()
+			recordfilename = record_file_prefix + "-" + now.strftime("%Y%m%d%H%M%S") + "-c2s."
+			i = 1
+			while os.path.exists(recordfilename+"%d"%i):
+				i = i + 1
+			recordlog = open(recordfilename+"%d"%i, 'w')
+			recordlog.write(msg)
+			recordlog.close()
 		return _sctp.sctp_send_msg(self._sk.fileno(), msg, to, ppid, flags, stream, timetolive, context)
 
 	def sctp_recv(self, maxlen):
