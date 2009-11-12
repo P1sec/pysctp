@@ -63,6 +63,7 @@
 #define SCTP_SN_TYPE_BASE				(1<<15)
 #endif
 
+#ifndef linux
 /*
  * 7.1.10 Set Primary Address (SCTP_PRIMARY_ADDR)
  *
@@ -75,3 +76,4 @@ struct sctp_prim {
         sctp_assoc_t            ssp_assoc_id;
         struct sockaddr_storage ssp_addr;
 };
+#endif
