@@ -5,12 +5,14 @@ Elvis Pfützenreuter
 Instituto Nokia de Tecnologia (http://www.indt.org.br)
 epx@epx.com.br
 
+INTRODUCTION
+
 PySCTP gives access to the SCTP transport protocol from Python language.
 It extends the traditional socket interface, allowing
 SCTP sockets to be used in most situations where a TCP or UDP socket
 would work, while preserving the unique characteristics of the protocol.
 
-For more information about SCTP, go to http://www.sctp.org or RFC 2960.
+For more information about SCTP, go to http://www.sctp.org or RFC 4960.
 
 In a nutshell, PySCTP can be used as follows:
 
@@ -41,6 +43,17 @@ Programming.
 
 WARNING: the API of this module is not stable yet. We expect not to
 change it too much, but do not base any critical work on it yet :)
+
+INSTALL
+
+sudo python setup.py install
+
+to see what this is going to install without actually doing it:
+python setup.py install --dry-run
+
+to just build and not install:
+python setup.py build
+
 
 1) The "sctp" module
 
