@@ -5,6 +5,10 @@ Elvis Pfützenreuter
 Instituto Nokia de Tecnologia (http://www.indt.org.br)
 epx@epx.com.br
 
+Philippe Langlois
+P1 Security (http://www.p1sec.com)
+Phil __AT__ p1sec.com
+
 INTRODUCTION
 
 PySCTP gives access to the SCTP transport protocol from Python language.
@@ -13,6 +17,7 @@ SCTP sockets to be used in most situations where a TCP or UDP socket
 would work, while preserving the unique characteristics of the protocol.
 
 For more information about SCTP, go to http://www.sctp.org or RFC 4960.
+For discussion, sources, bugs, go to http://github.com/philpraxis/pysctp
 
 In a nutshell, PySCTP can be used as follows:
 
@@ -44,6 +49,7 @@ Programming.
 WARNING: the API of this module is not stable yet. We expect not to
 change it too much, but do not base any critical work on it yet :)
 
+
 INSTALL
 
 sudo python setup.py install
@@ -54,6 +60,8 @@ python setup.py install --dry-run
 to just build and not install:
 python setup.py build
 
+
+DESCRIPTION
 
 1) The "sctp" module
 
@@ -106,4 +114,4 @@ This module is licensed under the LGPL license.
 
 Elvis Pfützenreuter <elvis.pfutzenreuter@indt.org.br>
 Casimiro Daniel NPRI <CasimiroD@npt.nuwc.navy.mil> - patch for new SCTP_* constants
-Philippe Langlois <Phil@p1sec.com> - patch for Mac OS X support, Python distutils packaging, GIT open repository
+Philippe Langlois <Phil __AT__ p1sec.com> - patch for Mac OS X support, Python distutils packaging, GIT open repository
