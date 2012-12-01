@@ -3,11 +3,11 @@ PySCTP - SCTP bindings for Python
 
 Elvis Pfützenreuter 
 Instituto Nokia de Tecnologia (http://www.indt.org.br)
-epx@epx.com.br
+epx __AT__ epx.com.br
 
 Philippe Langlois
 P1 Security (http://www.p1sec.com)
-Phil __AT__ p1sec.com
+phil __AT__ p1sec.com
 
 ======================================================================
 INSTALL
@@ -131,6 +131,6 @@ This module is licensed under the LGPL license.
 ======================================================================
 Credits
 
-Elvis Pfützenreuter <elvis.pfutzenreuter@indt.org.br>
-Casimiro Daniel NPRI <CasimiroD@npt.nuwc.navy.mil> - patch for new SCTP_* constants
-Philippe Langlois <Phil __AT__ p1sec.com> - patch for Mac OS X support, Python distutils packaging, GIT open repository
+Elvis Pfützenreuter <elvis.pfutzenreuter __AT__ indt.org.br>
+Philippe Langlois <phil __AT__ p1sec.com>
+Casimiro Daniel NPRI <CasimiroD  __AT__ npt.nuwc.navy.mil> - patch for new SCTP_* constants
