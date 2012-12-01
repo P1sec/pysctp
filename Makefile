@@ -20,3 +20,6 @@ _sctp.so: _sctp.o
 
 _sctp.o: _sctp.c
 	gcc $(CFLAGS) -c _sctp.c
+
+installdeps:
+	sudo apt-get install libsctp-dev python-dev

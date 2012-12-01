@@ -110,6 +110,20 @@ NOTE: it all has been tested agains lksctp-utils 1.0.1 and kernel
 depend of testing on a newer environment to be implemented.
 
 ======================================================================
+PREREQUISITES
+
+To install dependencies on most systems, type:
+make installdeps
+
+-----------
+libsctp-dev
+
+The problem is that the libsctp-dev package was not installed. 
+Installing it fixed the problem:
+sudo apt-get install libsctp-dev
+
+
+======================================================================
 License
 
 This module is licensed under the LGPL license.
