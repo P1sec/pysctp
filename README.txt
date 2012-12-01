@@ -14,11 +14,17 @@ INSTALL
 
 sudo python setup.py install
 
-to see what this is going to install without actually doing it:
+* to see what this is going to install without actually doing it:
 python setup.py install --dry-run
 
-to just build and not install:
+* to just build and not install:
 python setup.py build
+
+======================================================================
+DEPENDENCIES:
+
+You can use to automatically install dependencies for Debian/Ubuntu:
+make installdeps
 
 
 ======================================================================
@@ -108,19 +114,6 @@ It avoids that _sctp depends on sctp.
 NOTE: it all has been tested agains lksctp-utils 1.0.1 and kernel
 2.6.10, that come with Ubuntu Hoary. Some newer calls like connectx()
 depend of testing on a newer environment to be implemented.
-
-======================================================================
-PREREQUISITES
-
-To install dependencies on most systems, type:
-make installdeps
-
------------
-libsctp-dev
-
-The problem is that the libsctp-dev package was not installed. 
-Installing it fixed the problem:
-sudo apt-get install libsctp-dev
 
 
 ======================================================================
