@@ -833,8 +833,9 @@ static PyObject* get_events(PyObject* dummy, PyObject* args)
 {
 	PyObject* ret = 0;
 	int fd;
+	char padding[4];
 	struct sctp_event_subscribe v;
-	socklen_t lv = sizeof(v);
+	socklen_t lv = 10;
 
 	if (PyArg_ParseTuple(args, "i", &fd)) {
 		if (getsockopt(fd, SOL_SCTP, SCTP_EVENTS, &v, &lv)) {
