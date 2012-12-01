@@ -2,3 +2,5 @@ include *.c
 include *.h
 include TODO
 include test*
+include *.txt
+include VERSION
