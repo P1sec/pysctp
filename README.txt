@@ -26,6 +26,11 @@ DEPENDENCIES:
 You can use to automatically install dependencies for Debian/Ubuntu:
 make installdeps
 
+For Mac OSX (Montain lion OSX 10.8):
+https://nplab.fh-muenster.de/groups/wiki/wiki/f366c/SCTP_on_Mountain_Lion.html
+
+Mac OSX SCTP Network Kernel Extension (NKE) available at:
+http://sctp.fh-muenster.de/sctp-nke.html
 
 ======================================================================
 INTRODUCTION
