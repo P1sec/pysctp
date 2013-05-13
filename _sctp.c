@@ -219,11 +219,11 @@ static ktuple _constants[] =
 	{"SCTP_REMOTE_ERROR", SCTP_REMOTE_ERROR},
 	{"SCTP_SHUTDOWN_EVENT", SCTP_SHUTDOWN_EVENT},
 	{"SCTP_PARTIAL_DELIVERY_EVENT", SCTP_PARTIAL_DELIVERY_EVENT}, 
-    #ifdef __sun__
-    {"SCTP_ADAPTATION_INDICATION", SCTP_ADAPTION_INDICATION},
-    #else
+        #ifdef __sun__
+        {"SCTP_ADAPTATION_INDICATION", SCTP_ADAPTION_INDICATION},
+        #else
 	{"SCTP_ADAPTATION_INDICATION", SCTP_ADAPTATION_INDICATION},
-    #endif
+        #endif
 	{0, -1}
 };
 
@@ -866,11 +866,11 @@ static PyObject* get_events(PyObject* dummy, PyObject* args)
 			PyDict_SetItemString(ret, "_peer_error", PyBool_FromLong(v.sctp_peer_error_event));
 			PyDict_SetItemString(ret, "_shutdown", PyBool_FromLong(v.sctp_shutdown_event));
 			PyDict_SetItemString(ret, "_partial_delivery", PyBool_FromLong(v.sctp_partial_delivery_event));
-            #ifdef __sun__
+                        #ifdef __sun__
 			PyDict_SetItemString(ret, "_adaptation_layer", PyBool_FromLong(v.sctp_adaption_layer_event));
-            #else
+            		#else
 			PyDict_SetItemString(ret, "_adaptation_layer", PyBool_FromLong(v.sctp_adaptation_layer_event));
-            #endif
+            		#endif
 		}
 	}
 	return ret;
@@ -912,11 +912,11 @@ static PyObject* set_events(PyObject* dummy, PyObject* args)
 		v.sctp_peer_error_event = PyInt_AsLong(o_peer_error);
 		v.sctp_shutdown_event = PyInt_AsLong(o_shutdown);
 		v.sctp_partial_delivery_event = PyInt_AsLong(o_partial_delivery);
-        #ifdef __sun__
+        	#ifdef __sun__
 		v.sctp_adaption_layer_event = PyInt_AsLong(o_adaptation_layer);
 		#else
 		v.sctp_adaptation_layer_event = PyInt_AsLong(o_adaptation_layer);
-        #endif
+        	#endif
 		
 		if (setsockopt(fd, SOL_SCTP, SCTP_EVENTS, &v, sizeof(v))) {
 			PyErr_SetFromErrno(PyExc_IOError);
@@ -1027,11 +1027,11 @@ static PyObject* get_adaptation(PyObject* dummy, PyObject* args)
 	socklen_t lv = sizeof(v);
 	
 	if (PyArg_ParseTuple(args, "i", &fd)) {
-        #ifdef __sun__
-        if (getsockopt(fd, SOL_SCTP, SCTP_ADAPTION_LAYER, &v, &lv)) {
-        #else
+        	#ifdef __sun__
+        	if (getsockopt(fd, SOL_SCTP, SCTP_ADAPTION_LAYER, &v, &lv)) {
+        	#else
 		if (getsockopt(fd, SOL_SCTP, SCTP_ADAPTATION_LAYER, &v, &lv)) {
-        #endif
+        	#endif
 			PyErr_SetFromErrno(PyExc_IOError);
 		} else {
 			ret = PyInt_FromLong(v);
@@ -1046,11 +1046,11 @@ static PyObject* set_adaptation(PyObject* dummy, PyObject* args)
 	int fd, v;
 
 	if (PyArg_ParseTuple(args, "ii", &fd, &v)) {
-        #ifdef __sun__
-        if (setsockopt(fd, SOL_SCTP, SCTP_ADAPTION_LAYER, &v, sizeof(v))) {
-        #else
+        	#ifdef __sun__
+        	if (setsockopt(fd, SOL_SCTP, SCTP_ADAPTION_LAYER, &v, sizeof(v))) {
+        	#else
 		if (setsockopt(fd, SOL_SCTP, SCTP_ADAPTATION_LAYER, &v, sizeof(v))) {
-        #endif
+        	#endif
 			PyErr_SetFromErrno(PyExc_IOError);
 		} else {
 			ret = Py_None; Py_INCREF(ret);
