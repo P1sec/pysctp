@@ -1556,19 +1556,19 @@ void interpret_notification(PyObject* dict, const void *pnotif, int size)
 		PyDict_SetItemString(dict, "assoc_id", PyInt_FromLong(n->pdapi_assoc_id));
 		}
 		break;
-    #ifdef __sun__
-    case SCTP_ADAPTION_INDICATION:
-    #else
-	case SCTP_ADAPTATION_INDICATION:
-    #endif
+    	#ifdef __sun__
+    	case SCTP_ADAPTION_INDICATION:
+    	#else
+    	case SCTP_ADAPTATION_INDICATION:
+    	#endif
 		{
-        #ifdef __sun__
+        	#ifdef __sun__
 		const struct sctp_adaption_event* n = &(notif->sn_adaption_event);
 		PyDict_SetItemString(dict, "adaptation_ind", PyInt_FromLong(n->sai_adaption_ind));
-        #else
+        	#else
 		const struct sctp_adaptation_event* n = &(notif->sn_adaptation_event);
 		PyDict_SetItemString(dict, "adaptation_ind", PyInt_FromLong(n->sai_adaptation_ind));
-        #endif
+        	#endif
 		PyDict_SetItemString(dict, "assoc_id", PyInt_FromLong(n->sai_assoc_id));
 		}
 		break;
