@@ -1558,7 +1558,7 @@ static PyObject* sctp_recv_msg(PyObject* dummy, PyObject* args)
 	char cfrom[256];
 	char *msg;
 	int size;
-	int flags;
+	int flags = 0;
 	struct sctp_sndrcvinfo sinfo;
 
 	PyObject* notification = PyDict_New();
