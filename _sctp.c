@@ -1397,15 +1397,17 @@ static PyObject* bindx(PyObject* dummy, PyObject* args)
 static PyObject* connectx(PyObject* dummy, PyObject* args)
 {
 	PyObject* ret = 0;
+	PyObject* dict;
 	int fd;
 	PyObject* addrs;
 	struct sockaddr saddr;
 	struct sockaddr* saddrs;
+	sctp_assoc_t id;
 	int saddr_len, saddrs_len;
 	int addrcount;
 	int x;
 
-	if (! PyArg_ParseTuple(args, "iO", &fd, &addrs)) {
+	if (! PyArg_ParseTuple(args, "iOO", &fd, &addrs, &dict)) {
 		return ret;
 	}
 
@@ -1451,9 +1453,10 @@ static PyObject* connectx(PyObject* dummy, PyObject* args)
 		saddrs_len += saddr_len;
 	}
 
-	if (sctp_connectx(fd, saddrs, addrcount, NULL)) {
+	if (sctp_connectx(fd, saddrs, addrcount, &id)) {
 		PyErr_SetFromErrno(PyExc_IOError);
 	} else {
+		if(PyDict_Check(dict)) PyDict_SetItemString(dict, "assoc_id", Py23_PyLong_FromLong(id));
 		ret = Py_None; Py_INCREF(ret);
 	}
 
@@ -1613,10 +1616,10 @@ static PyObject* sctp_send_msg(PyObject* dummy, PyObject* args)
 		}
 	}
 
-    Py_BEGIN_ALLOW_THREADS
+	Py_BEGIN_ALLOW_THREADS
 	size_sent = sctp_sendmsg(fd, msg, msg_len, (struct sockaddr*) psto, sto_len, ppid, 
 					flags, stream, ttl, context);
-    Py_END_ALLOW_THREADS
+	Py_END_ALLOW_THREADS
 
 	if (size_sent < 0) {
 		PyErr_SetFromErrno(PyExc_IOError);
@@ -1769,7 +1772,7 @@ static PyObject* sctp_recv_msg(PyObject* dummy, PyObject* args)
 	bzero(&sfrom, sizeof(sfrom));
 	bzero(&sinfo, sizeof(sinfo));
 
-    Py_BEGIN_ALLOW_THREADS
+	Py_BEGIN_ALLOW_THREADS
 	size = sctp_recvmsg(fd, msg, max_len, (struct sockaddr*) &sfrom, &sfrom_len, &sinfo, &flags);
 	Py_END_ALLOW_THREADS
 
