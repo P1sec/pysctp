@@ -26,11 +26,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this library; If not, see <http://www.gnu.org/licenses/>.
 
+import time
 import _sctp
 import sctp
-from sctp import *
-import time
-
+from sctp     import *
 from optparse import OptionParser
 
 parser = OptionParser()
@@ -61,7 +60,7 @@ tcp = sctpsocket_tcp(socket.AF_INET)
 
 saddr = (server, tcpport)
  
-print "TCP ", saddr, " ----------------------------------------------"
+print("TCP %r ----------------------------------------------" % (saddr, )) 
 
 tcp.initparams.max_instreams = 3
 tcp.initparams.num_ostreams = 3
@@ -71,19 +70,19 @@ tcp.events.data_io = 1
 
 if options.localport != 0:
    # tcp.bindx([("", options.localport)])
-   print "Binding..."
+   print("Binding...")
    tcp.bind(("", options.localport))
 
 tcp.connect(saddr)
 
-tcp.sctp_send("ABCDEF: TEST SUCCEEDED (test_local_cnx.py (C) 2009 Philippe Langlois)\n\l")
+tcp.sctp_send(b"ABCDEF: TEST SUCCEEDED (test_local_cnx.py (C) 2009 Philippe Langlois)\n\l")
 while 1:
    fromaddr, flags, msgret, notif = tcp.sctp_recv(1000)
-   print "	Msg arrived, flag %d" % flags
+   print("	Msg arrived, flag %d" % flags)
 
    if flags & FLAG_NOTIFICATION:
-      raise "We did not subscribe to receive notifications!"
+      raise(Exception("We did not subscribe to receive notifications!"))
    # else:
-   print "%s" % msgret
+   print("%s" % msgret)
 
 tcp.close()

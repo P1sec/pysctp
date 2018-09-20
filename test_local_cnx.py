@@ -24,6 +24,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this library; If not, see <http://www.gnu.org/licenses/>.
 
+"""
+Test with sctp_test from lksctp:
+sctp_test -H 127.0.0.1 -P 10000 -l
+
+Then run:
+python ./test_local_cnx.py
+or
+python3 ./test_local_cnx.py
+"""
+
 import _sctp
 import sctp
 from sctp import *
@@ -34,12 +44,12 @@ server = "127.0.0.1"
 tcpport = 10000
 
 if _sctp.getconstant("IPPROTO_SCTP") != 132:
-	raise "getconstant failed"
+	raise(Exception("getconstant failed"))
 tcp = sctpsocket_tcp(socket.AF_INET)
 
 saddr = (server, tcpport)
  
-print "TCP ", saddr, " ----------------------------------------------"
+print("TCP %r ----------------------------------------------" % (saddr, ))
 
 tcp.initparams.max_instreams = 3
 tcp.initparams.num_ostreams = 3
@@ -49,14 +59,14 @@ tcp.events.data_io = 1
 
 tcp.connect(saddr)
 
-tcp.sctp_send("ABCDEF: TEST SUCCEEDED (test_local_cnx.py (C) 2009 Philippe Langlois)\n\l")
+tcp.sctp_send(b"ABCDEF: TEST SUCCEEDED (test_local_cnx.py (C) 2009 Philippe Langlois)\n\l")
 while 1:
     fromaddr, flags, msgret, notif = tcp.sctp_recv(1000)
-    print "	Msg arrived, flag %d" % flags
+    print(" Msg arrived, flag %d" % flags)
 
     if flags & FLAG_NOTIFICATION:
-        raise "We did not subscribe to receive notifications!"
-    else:
-	print "%s" % msgret
+        raise(Exception("We did not subscribe to receive notifications!"))
+    #else:
+	print("%s" % msgret)
 
 tcp.close()
