@@ -53,8 +53,8 @@ In a nutshell, PySCTP can be used as follows:
 import socket
 import sctp
 
-sk = sctpsocket_tcp(socket.AF_INET)
-sk.connect("10.0.1.1")
+sk = sctp.sctpsocket_tcp(socket.AF_INET)
+sk.connect(("10.0.1.1", 36413))
 
 ... most socket operations work for SCTP too ...
 
