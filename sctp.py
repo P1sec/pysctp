@@ -35,7 +35,7 @@ CONTAIN a standard Python socket, and DELEGATE unknown calls to it.
 So it should fit in most places where a "real" socket is expected.
 
 When receiving data, it is also possible to receive metadata in the
-for of events. An event will be one of the following classes:
+form of events. An event will be one of the following classes:
 
 sndrcvinfo(): 
 notification(): 
@@ -63,6 +63,8 @@ event, are defined as class constants and not as module constants,
 to avoid excessive namespace pollution.
 
 """
+
+from __future__ import print_function
 
 import socket
 import _sctp
@@ -495,11 +497,11 @@ def notification_factory(raw_notification):
 	except:
 		raise ValueError("Dictionary passed as parameter has no 'type' attribute")
 
-	if not notification_table.has_key(num_type):
+	if num_type not in notification_table:
 		# raw object since we do not know the type of notification
 		o = notification(raw_notification)
-		print >> sys.stderr, "Warning: an unknown notification event (value %d) has arrived" % \
-			num_type
+		print("Warning: an unknown notification event (value %d) has arrived" % \
+			  num_type, file=sys.stderr)
 	else:
 		o = notification_table[num_type](raw_notification)
 	return o
@@ -1066,7 +1068,7 @@ class sctpsocket(object):
 		SCTP implementations support connectx(). It will raise an RuntimeError()
 		if not supported.
 		"""
-		if _sctp.__dict__.has_key("connectx"):
+		if "connectx" in _sctp.__dict__:
 			_sctp.connectx(self._sk.fileno(), sockaddrs)
 		else:
 			raise RuntimeError("Underlying SCTP implementation does not have connectx()")
