@@ -391,7 +391,7 @@ class send_failed(notification):
 		
 		notification.__init__(self, values)
 		self.info = sndrcvinfo(self._info)
-		del values._info
+		del self._info
 
 	flag_DATA_UNSENT = _sctp.getconstant("SCTP_DATA_UNSENT")
 	flag_DATA_SENT = _sctp.getconstant("SCTP_DATA_SENT")
