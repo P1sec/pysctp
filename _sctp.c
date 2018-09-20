@@ -1613,8 +1613,10 @@ static PyObject* sctp_send_msg(PyObject* dummy, PyObject* args)
 		}
 	}
 
+    Py_BEGIN_ALLOW_THREADS
 	size_sent = sctp_sendmsg(fd, msg, msg_len, (struct sockaddr*) psto, sto_len, ppid, 
 					flags, stream, ttl, context);
+    Py_END_ALLOW_THREADS
 
 	if (size_sent < 0) {
 		PyErr_SetFromErrno(PyExc_IOError);
@@ -1767,7 +1769,9 @@ static PyObject* sctp_recv_msg(PyObject* dummy, PyObject* args)
 	bzero(&sfrom, sizeof(sfrom));
 	bzero(&sinfo, sizeof(sinfo));
 
+    Py_BEGIN_ALLOW_THREADS
 	size = sctp_recvmsg(fd, msg, max_len, (struct sockaddr*) &sfrom, &sfrom_len, &sinfo, &flags);
+	Py_END_ALLOW_THREADS
 
 	if (size < 0) {
 		free(msg);
