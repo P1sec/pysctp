@@ -1359,6 +1359,18 @@ class sctpsocket(object):
 		"""
 		_sctp.set_adaptation(self._sk.fileno(), rvalue)
 
+	def get_sndbuf(self):
+		"""
+		Gets the send buffer size from the kernel for this socket.
+		"""
+		return _sctp.get_sndbuf(self._sk.fileno())
+
+	def set_sndbuf(self, rvalue):
+		"""
+		Sets the send buffer size in the kernel for this socket.
+		"""
+		_sctp.set_sndbuf(self._sk.fileno(), rvalue)
+
 	def get_disable_fragments(self):
 		"""
 		Queries kernel and returns True if message fragmenting is disable for

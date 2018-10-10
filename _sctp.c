@@ -77,6 +77,8 @@ static PyObject* get_autoclose(PyObject* dummy, PyObject* args);
 static PyObject* set_autoclose(PyObject* dummy, PyObject* args);
 static PyObject* get_adaptation(PyObject* dummy, PyObject* args);
 static PyObject* set_adaptation(PyObject* dummy, PyObject* args);
+static PyObject* get_sndbuf(PyObject* dummy, PyObject* args);
+static PyObject* set_sndbuf(PyObject* dummy, PyObject* args);
 static PyObject* set_peer_primary(PyObject* dummy, PyObject* args);
 static PyObject* set_primary(PyObject* dummy, PyObject* args);
 static PyObject* bindx(PyObject* dummy, PyObject* args);
@@ -127,6 +129,8 @@ static PyMethodDef _sctp_methods[] =
 	{"set_nodelay", set_nodelay, METH_VARARGS, ""},
 	{"get_adaptation", get_adaptation, METH_VARARGS, ""},
 	{"set_adaptation", set_adaptation, METH_VARARGS, ""},
+	{"get_sndbuf", get_sndbuf, METH_VARARGS, ""},
+	{"set_sndbuf", set_sndbuf, METH_VARARGS, ""},
 	{"get_disable_fragments", get_disable_fragments, METH_VARARGS, ""},
 	{"set_disable_fragments", set_disable_fragments, METH_VARARGS, ""},
 	{"get_events", get_events, METH_VARARGS, ""},
@@ -1161,6 +1165,37 @@ static PyObject* set_adaptation(PyObject* dummy, PyObject* args)
 		}
 	}
 	return ret;
+}
+
+static PyObject* get_sndbuf(PyObject* dummy, PyObject* args)
+{
+	PyObject* ret = 0;
+	int fd, v;
+	socklen_t lv = sizeof(v);
+	
+	if (PyArg_ParseTuple(args, "i", &fd)) {
+		if (getsockopt(fd, SOL_SOCKET, SO_SNDBUF, &v, &lv)) {
+			PyErr_SetFromErrno(PyExc_IOError);
+		} else {
+			ret = Py23_PyLong_FromLong(v);
+		}
+	}
+	return ret;
+}
+
+static PyObject* set_sndbuf(PyObject* dummy, PyObject* args)
+{
+	PyObject* ret = 0;
+	int fd, v;
+
+	if (PyArg_ParseTuple(args, "ii", &fd, &v)) {
+		if (setsockopt(fd, SOL_SOCKET, SO_SNDBUF, &v, sizeof(v))) {
+			PyErr_SetFromErrno(PyExc_IOError);
+		} else {
+			ret = Py_None; Py_INCREF(ret);
+		}
+	}
+	return ret;  
 }
 
 static int to_sockaddr(const char *caddr, int port, struct sockaddr* saddr, int* slen)
