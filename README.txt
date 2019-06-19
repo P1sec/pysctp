@@ -20,13 +20,16 @@ python setup.py install --dry-run
 * to just build and not install:
 python setup.py build
 
+In case you want to install the module explicitely for Python 3,
+just replace _python_ by _python3_ in the commands above.
+
 ======================================================================
 DEPENDENCIES:
 
-You can use to automatically install dependencies for Debian/Ubuntu:
+You can automatically install dependencies for Debian/Ubuntu (for Python 2):
 make installdeps
 
-Otherwise, necessary would be e.g. on Ubuntun libsctp-dev, python-dev and / or 
+Otherwise, necessary would be e.g. on Ubuntu libsctp-dev, python-dev and / or 
 python3-dev
 
 For Mac OSX (Montain lion OSX 10.8):
@@ -135,3 +138,4 @@ Credits
 Elvis Pfützenreuter <elvis.pfutzenreuter __AT__ indt.org.br>
 Philippe Langlois <phil __AT__ p1sec.com>
 Casimiro Daniel NPRI <CasimiroD  __AT__ npt.nuwc.navy.mil> - patch for new SCTP_* constants
+
