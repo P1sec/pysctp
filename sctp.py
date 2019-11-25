@@ -1041,7 +1041,7 @@ class sctpsocket(object):
 		"""
 		Binds to a list of addresses. This method() allows to bind to any subset 
 		of available interfaces, while standard bind() allows only one specific
-		interface, of all of them using the INADDR_ANY pseudo-address. Also, it
+		interface, or all of them using the INADDR_ANY pseudo-address. Also, it
 		allows to *remove* the binding from one or more addresses.
 
 		If you don't need the extended functionality of bindx(), standard bind()

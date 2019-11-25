@@ -1205,7 +1205,7 @@ static int to_sockaddr(const char *caddr, int port, struct sockaddr* saddr, int*
 	*slen = 0;
 
 #ifdef DEBUG
-	printf("Converting %s.%d... ", caddr, port);
+	printf("[DEBUG to_sockaddr] converting caddr: %s, port: %d\n", caddr, port);
 #endif
 
 	if (strcmp(caddr, "") == 0) {
@@ -1232,7 +1232,7 @@ static int to_sockaddr(const char *caddr, int port, struct sockaddr* saddr, int*
 	}
 
 #ifdef DEBUG
-	printf("result is %x.%x.%x\n", 
+	printf("[DEBUG to_sockaddr] sockaddr result is family: 0x%x, s_addr: 0x%x, port: 0x%x\n", 
 			((struct sockaddr_in*)saddr)->sin_family,
 			((struct sockaddr_in*)saddr)->sin_addr.s_addr,
 			((struct sockaddr_in*)saddr)->sin_port);
@@ -1417,6 +1417,12 @@ static PyObject* bindx(PyObject* dummy, PyObject* args)
 		saddrs = realloc(saddrs, saddrs_len + saddr_len);
 		memcpy( ((char*) saddrs) + saddrs_len, &saddr, saddr_len);
 		saddrs_len += saddr_len;
+		
+#ifdef DEBUG
+        printf("[DEBUG bindx] x: %d, caddr: %s, iport: %d, saddrs_len: %d\n",
+               x, caddr, iport, saddrs_len);
+#endif
+
 	}
 
 	if (sctp_bindx(fd, saddrs, addrcount, flags)) {
