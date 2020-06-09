@@ -1030,12 +1030,66 @@ class sctpsocket(object):
 		self._style = style
 		self._sk = sk
 		self._family = family
+		self._ppid = 0
+		self._ttl = 0
+		self._streamid = 0
 
 		self.unexpected_event_raises_exception = False
 		self.initparams = initparams(self)
 		self.events = event_subscribe(self)
 
 		self.datalogging = False
+
+	@property
+	def ppid(self):
+		"""
+		Read default payload protocol identifier
+		"""
+		return self._ppid
+
+	@ppid.setter
+	def ppid(self, newVal):
+		"""
+		Write default payload protocol identifier
+		"""
+		if not isinstance(newVal, int) or newVal < 0 or newVal > 0xFFFFFFFF:
+			raise ValueError('PPID shall be a valid unsigned 32bits integer')
+
+		self._ppid = newVal
+
+	@property
+	def ttl(self):
+		"""
+		Read default time to live value, 0 mean infinite
+		"""
+		return self._ttl
+
+	@ttl.setter
+	def ttl(self, newVal):
+		"""
+		Write default time to live
+		"""
+		if not isinstance(newVal, int) or newVal < 0 or newVal > 255:
+			raise ValueError('TTL shall be >= 0 and <= 255')
+
+		self._ttl = newVal
+
+	@property
+	def streamid(self):
+		"""
+		Read default stream identifier
+ 		"""
+		return self._streamid
+
+	@streamid.setter
+	def streamid(self, newVal):
+		"""
+		Write default stream identifier
+		"""
+		if not isinstance(newVal, int) or newVal < 0 or newVal > 65535:
+			raise ValueError('streamid shall be a valid unsigned 16bits integer')
+
+		self._streamid = newVal
 
 	def bindx(self, sockaddrs, action=BINDX_ADD):
 		"""
@@ -1107,7 +1161,7 @@ class sctpsocket(object):
 
 		return _sctp.getladdrs(self._sk.fileno(), assoc_id)
 
-	def sctp_send(self, msg, to=("",0), ppid=0, flags=0, stream=0, timetolive=0, context=0,
+	def sctp_send(self, msg, to=("",0), ppid=None, flags=0, stream=None, timetolive=None, context=0,
 	                    record_file_prefix="RECORD_sctp_traffic", datalogging = False):
 		"""
 		Sends a SCTP message. While send()/sendto() can also be used, this method also
@@ -1121,7 +1175,7 @@ class sctpsocket(object):
 		    WARNING: identifying destination by Association ID not implemented yet!
 
 		ppid: adaptation layer value, a 32-bit metadata that is sent along the message.
-		      Defaults to 0.
+		      If not set use default value.
 
 		flags: a bitmap of MSG_* flags. For example, MSG_UNORDERED indicates that 
 		       message can be delivered out-of-order, and MSG_EOF + empty message 
@@ -1131,11 +1185,12 @@ class sctpsocket(object):
 		       that are supported by sendto().
 
 		stream: stream number where the message will sent by. Defaults to 0.
+				If not set use default value.
 
 		timetolive: time to live of the message in milisseconds. Zero means infinite
 		            TTL. If TTL expires, the message is discarded. Discarding policy
 			    changes whether implementation implements the PR-SCTP extension or not.
-			    Defaults to 0 (infinite).
+			    If not set use default value.
 
 		context: an opaque 32-bit integer that will be returned in some notification events,
 		         if the event is directly related to this message transmission. So the
@@ -1150,6 +1205,15 @@ class sctpsocket(object):
 		both by the implementation and by the transmission buffer (SO_SNDBUF).
 		The application must configure this buffer accordingly.
 		"""
+		if ppid is None:
+			ppid = self._ppid
+
+		if timetolive is None:
+			timetolive = self._ttl
+
+		if stream is None:
+			stream = self._streamid
+
 		if datalogging == True or self.datalogging == True:
 			now = datetime.datetime.now()
 			recordfilename = record_file_prefix + "-" + now.strftime("%Y%m%d%H%M%S") + "-c2s."
