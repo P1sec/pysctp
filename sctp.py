@@ -1005,7 +1005,7 @@ class sctpsocket(object):
 		   associations, in seconds. A value of 0 means that no automatic close
 		   will be done. This property does not work for TCP-style sockets.
 
-	timetolive: Default TTL value to use with sctp_send. Default set to 0.
+	ttl: Default timetolive value to use with sctp_send. Default set to 0.
 
 	streamid: Default SCTP stream identifier value to use with sctp_send. Default set to 0.
 
@@ -1041,40 +1041,6 @@ class sctpsocket(object):
 		self.events = event_subscribe(self)
 
 		self.datalogging = False
-
-	@property
-	def ttl(self):
-		"""
-		Read default time to live value, 0 mean infinite
-		"""
-		return self._ttl
-
-	@ttl.setter
-	def ttl(self, newVal):
-		"""
-		Write default time to live
-		"""
-		if not isinstance(newVal, int) or newVal < 0 or newVal > 255:
-			raise ValueError('TTL shall be >= 0 and <= 255')
-
-		self._ttl = newVal
-
-	@property
-	def streamid(self):
-		"""
-		Read default stream identifier
- 		"""
-		return self._streamid
-
-	@streamid.setter
-	def streamid(self, newVal):
-		"""
-		Write default stream identifier
-		"""
-		if not isinstance(newVal, int) or newVal < 0 or newVal > 65535:
-			raise ValueError('streamid shall be a valid unsigned 16bits integer')
-
-		self._streamid = newVal
 
 	def bindx(self, sockaddrs, action=BINDX_ADD):
 		"""
@@ -1672,6 +1638,36 @@ class sctpsocket(object):
 		"""
 		_sctp.set_rtoinfo(self._sk.fileno(), o.__dict__)
 
+	def get_ttl(self):
+		"""
+		Read default time to live value, 0 mean infinite
+		"""
+		return self._ttl
+
+	def set_ttl(self, newVal):
+		"""
+		Write default time to live
+		"""
+		if not isinstance(newVal, int) or newVal < 0 or newVal > 255:
+			raise ValueError('TTL shall be >= 0 and <= 255')
+
+		self._ttl = newVal
+
+	def get_streamid(self):
+		"""
+		Read default stream identifier
+ 		"""
+		return self._streamid
+
+	def set_streamid(self, newVal):
+		"""
+		Write default stream identifier
+		"""
+		if not isinstance(newVal, int) or newVal < 0 or newVal > 65535:
+			raise ValueError('streamid shall be a valid unsigned 16bits integer')
+
+		self._streamid = newVal
+
 	# delegation
 
 	def sock(self):
@@ -1696,6 +1692,8 @@ class sctpsocket(object):
 	mappedv4 = property(get_mappedv4, set_mappedv4)
 	maxseg = property(get_maxseg, set_maxseg)
 	autoclose = property(get_autoclose, set_autoclose)
+	ttl = property(get_ttl, set_ttl)
+	streamid = property(get_streamid, set_streamid)
 
 class sctpsocket_tcp(sctpsocket):
 	"""
