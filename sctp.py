@@ -230,7 +230,6 @@ class sndrcvinfo(object):
 		self.stream = 0
 		self.ssn = 0
 		self.flags = 0
-		self.ppid = 0
 		self.context = 0
 		self.timetolive = 0
 		self.tsn = 0
@@ -1006,6 +1005,10 @@ class sctpsocket(object):
 		   associations, in seconds. A value of 0 means that no automatic close
 		   will be done. This property does not work for TCP-style sockets.
 
+	timetolive: Default TTL value to use with sctp_send. Default set to 0.
+
+	streamid: Default SCTP stream identifier value to use with sctp_send. Default set to 0.
+
 	IMPORTANT NOTE: the maximum message size is limited both by the implementation 
 	and by the transmission buffer (SO_SNDBUF). SCTP applications must configure 
 	the transmission and receiving bufers accordingly to the biggest messages it
@@ -1030,7 +1033,6 @@ class sctpsocket(object):
 		self._style = style
 		self._sk = sk
 		self._family = family
-		self._ppid = 0
 		self._ttl = 0
 		self._streamid = 0
 
@@ -1039,23 +1041,6 @@ class sctpsocket(object):
 		self.events = event_subscribe(self)
 
 		self.datalogging = False
-
-	@property
-	def ppid(self):
-		"""
-		Read default payload protocol identifier
-		"""
-		return self._ppid
-
-	@ppid.setter
-	def ppid(self, newVal):
-		"""
-		Write default payload protocol identifier
-		"""
-		if not isinstance(newVal, int) or newVal < 0 or newVal > 0xFFFFFFFF:
-			raise ValueError('PPID shall be a valid unsigned 32bits integer')
-
-		self._ppid = newVal
 
 	@property
 	def ttl(self):
@@ -1161,7 +1146,7 @@ class sctpsocket(object):
 
 		return _sctp.getladdrs(self._sk.fileno(), assoc_id)
 
-	def sctp_send(self, msg, to=("",0), ppid=None, flags=0, stream=None, timetolive=None, context=0,
+	def sctp_send(self, msg, to=("",0), ppid=0, flags=0, stream=None, timetolive=None, context=0,
 	                    record_file_prefix="RECORD_sctp_traffic", datalogging = False):
 		"""
 		Sends a SCTP message. While send()/sendto() can also be used, this method also
@@ -1175,7 +1160,7 @@ class sctpsocket(object):
 		    WARNING: identifying destination by Association ID not implemented yet!
 
 		ppid: adaptation layer value, a 32-bit metadata that is sent along the message.
-		      If not set use default value.
+		      Default to 0.
 
 		flags: a bitmap of MSG_* flags. For example, MSG_UNORDERED indicates that 
 		       message can be delivered out-of-order, and MSG_EOF + empty message 
@@ -1184,7 +1169,7 @@ class sctpsocket(object):
 		       It does NOT include flags like MSG_DONTROUTE or other low-level flags
 		       that are supported by sendto().
 
-		stream: stream number where the message will sent by. Defaults to 0.
+		stream: stream number where the message will sent by.
 				If not set use default value.
 
 		timetolive: time to live of the message in milisseconds. Zero means infinite
@@ -1205,8 +1190,6 @@ class sctpsocket(object):
 		both by the implementation and by the transmission buffer (SO_SNDBUF).
 		The application must configure this buffer accordingly.
 		"""
-		if ppid is None:
-			ppid = self._ppid
 
 		if timetolive is None:
 			timetolive = self._ttl
