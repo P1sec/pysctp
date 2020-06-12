@@ -1112,7 +1112,7 @@ class sctpsocket(object):
 
 		return _sctp.getladdrs(self._sk.fileno(), assoc_id)
 
-	def sctp_send(self, msg, to=("",0), ppid=0, flags=0, stream=None, timetolive=None, context=0,
+	def sctp_send(self, msg, to=("",0), ppid=None, flags=0, stream=None, timetolive=None, context=0,
 	                    record_file_prefix="RECORD_sctp_traffic", datalogging = False):
 		"""
 		Sends a SCTP message. While send()/sendto() can also be used, this method also
@@ -1156,6 +1156,9 @@ class sctpsocket(object):
 		both by the implementation and by the transmission buffer (SO_SNDBUF).
 		The application must configure this buffer accordingly.
 		"""
+
+		if ppid is None:
+			ppid = self.adaptation
 
 		if timetolive is None:
 			timetolive = self._ttl
