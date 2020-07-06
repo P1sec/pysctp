@@ -19,6 +19,7 @@ along with this library; If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+import setuptools
 from distutils.core import setup, Extension
 
 setup(name='pysctp',
@@ -46,6 +47,6 @@ setup(name='pysctp',
 	  data_files=[('include', ['_sctp.h'])],
 	  author='Elvis Pfutzenreuter',
 	  author_email='epx@epx.com.br',
-      maintainer='Philippe Langlois',
- 	  maintainer_email='phil@p1sec.com',
+      maintainer='Benoit Michau',
+ 	  maintainer_email='benoit.michau@p1sec.com',
       )
