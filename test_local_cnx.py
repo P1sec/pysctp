@@ -67,6 +67,6 @@ while 1:
     if flags & FLAG_NOTIFICATION:
         raise(Exception("We did not subscribe to receive notifications!"))
     #else:
-	print("%s" % msgret)
+    print("%s" % msgret)
 
 tcp.close()
