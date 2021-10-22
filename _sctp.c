@@ -18,6 +18,9 @@
  * Elvis Pfützenreuter (elvis.pfutzenreuter@{gmail.com,indt.org.br})
  * Copyright (c) 2005 Instituto Nokia de Tecnologia
  */
+
+#define PY_SSIZE_T_CLEAN
+
 #include <Python.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
