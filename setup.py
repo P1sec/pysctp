@@ -23,13 +23,13 @@ import setuptools
 from distutils.core import setup, Extension
 
 setup(name='pysctp',
-      version='0.6.1',
+      version='0.6.2',
       license = "LGPL",
-      description = 'pysctp is a python module for the SCTP protocol stack and library. ',
-      long_description = 'pysctp is a python module for the SCTP protocol stack and library. It is the socket API implementation, not the SCTPlib implementation (this latest one is not supported anymore by their original developers). On Mac OS X you will need the SCTP NKE (Kernel Extensions) to make it work, use: http://sctp.fh-muenster.de/sctp-nke.html. On Debian-based systems, you need a SCTP-aware kernel (most are) and install the following packages: apt-get install libsctp-dev libsctp1 lksctp-tools',
+      description = 'pysctp is a python module for the SCTP protocol stack and library',
+      long_description = 'pysctp is a python wrapper for the SCTP protocol stack and library. On Mac OS X you will need the SCTP NKE (Kernel Extensions). On Linux systems, you need an SCTP-aware kernel (most are) and install the following packages (debian): apt install libsctp-dev libsctp1 lksctp-tools',
       url = "https://github.com/p1sec/pysctp",
       keywords = "SCTP SIGTRAN",
-      platforms = ["Linux", "Debian", "Ubuntu", "Mac OS X (tested on 10.4)"],
+      platforms = ["Linux", "Debian", "Ubuntu", "Mac OS X (untested)"],
       classifiers = ['Development Status :: 5 - Production/Stable',
                      'Intended Audience :: Developers',
                      'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
