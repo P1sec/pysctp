@@ -20,23 +20,21 @@ python setup.py install --dry-run
 * to just build and not install:
 python setup.py build
 
-In case you want to install the module explicitely for Python 3,
-just replace _python_ by _python3_ in the commands above.
+In case you want to install the module explicitely for Python 2 or 3,
+just replace _python_ by _python2_ / _python3_ in the commands above.
 
 ======================================================================
 DEPENDENCIES:
 
-You can automatically install dependencies for Debian/Ubuntu (for Python 2):
+You can automatically install dependencies for Debian/Ubuntu:
 make installdeps
 
-Otherwise, necessary would be e.g. on Ubuntu libsctp-dev, python-dev and / or 
-python3-dev
+Otherwise, necessary would be e.g. on Ubuntu: libsctp-dev and python-dev 
+(python2-dev or python3-dev for an explicit version of Python)
 
-For Mac OSX (Montain lion OSX 10.8):
-https://nplab.fh-muenster.de/groups/wiki/wiki/f366c/SCTP_on_Mountain_Lion.html
-
-Mac OSX SCTP Network Kernel Extension (NKE) available at:
-http://sctp.fh-muenster.de/sctp-nke.html
+Support for Mac OSX is not tested, but should be doable through the SCTP Network
+Kernel Extension (NKE) available at:
+https://github.com/sctplab/SCTP_NKE_HighSierra
 
 ======================================================================
 INTRODUCTION
@@ -47,7 +45,7 @@ SCTP sockets to be used in most situations where a TCP or UDP socket
 would work, while preserving the unique characteristics of the protocol.
 
 For more information about SCTP, go to http://www.sctp.org or RFC 4960.
-For discussion, sources, bugs, go to http://github.com/philpraxis/pysctp
+For discussion, sources, bugs, go to http://github.com/p1sec/pysctp
 
 In a nutshell, PySCTP can be used as follows:
 
@@ -65,8 +63,8 @@ sk.close()
 
 ---------
 
-The autotest programs (test.py and test_server.py) are actually a good
-example of pysctp usage.
+The autotest programs (e.g. test_local_cnx.py) are actually good examples of 
+pysctp usage.
 
 The BSD/Sockets SCTP extensions are defined by an IETF draft
 (draft-ietf-tsvwg-sctpsocket-10.txt) and PySCTP tries to map those
@@ -75,9 +73,6 @@ SCTP and PySCTP, you must understand how the API works. You can
 find advice about it in the the draft itself (not incredibly easy
 to understand though), as well the 3rd edition of Unix Network 
 Programming.
-
-WARNING: the API of this module is not stable yet. We expect not to
-change it too much, but do not base any critical work on it yet :)
 
 
 ======================================================================
