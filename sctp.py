@@ -1175,7 +1175,7 @@ class sctpsocket(object):
 			recordlog = open(recordfilename+"%d"%i, 'w')
 			recordlog.write(msg)
 			recordlog.close()
-		return _sctp.sctp_send_msg(self._sk.fileno(), msg, to, ppid, flags, stream, timetolive, context)
+		return _sctp.sctp_send_msg(self._sk.fileno(), bytes(msg), to, ppid, flags, stream, timetolive, context)
 
 	def sctp_recv(self, maxlen):
 		"""
