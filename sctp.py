@@ -1382,13 +1382,26 @@ class sctpsocket(object):
 		Gets the send buffer size from the kernel for this socket.
 		"""
 		return _sctp.get_sndbuf(self._sk.fileno())
-        
+
 	def set_sndbuf(self, rvalue):
 		"""
 		Sets the send buffer size in the kernel for this socket.
 		"""
 		# Linux doubles the size, hence we divise it by 2
 		_sctp.set_sndbuf(self._sk.fileno(), rvalue//2)
+
+	def get_rcvbuf(self):
+		"""
+		Gets the receive buffer size from the kernel for this socket.
+		"""
+		return _sctp.get_rcvbuf(self._sk.fileno())
+
+	def set_rcvbuf(self, rvalue):
+		"""
+		Sets the receive buffer size in the kernel for this socket.
+		"""
+		# Linux doubles the size, hence we divise it by 2
+		_sctp.set_rcvbuf(self._sk.fileno(), rvalue//2)
 
 	def get_disable_fragments(self):
 		"""
