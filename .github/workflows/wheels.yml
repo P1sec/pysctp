@@ -27,7 +27,10 @@ jobs:
            # pinned version
            CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2014_x86_64:latest
            CIBW_MANYLINUX_I686_IMAGE: quay.io/pypa/manylinux2014_i686:latest
-           CIBW_BEFORE_ALL_LINUX: YUM0=mirror.centos.org yum install -y lksctp-tools-dev
+           CIBW_BEFORE_ALL_LINUX: >
+             sed -i 's/exclude=.gov, facebook/exclude=.gov, facebook, mirror.es.its.nyu.edu/' fastestmirror.conf &&
+             rm /var/cache/yum/timedhosts.txt &&
+             yum install -y lksctp-tools-dev
            #for now just a quick test of loopback
            CIBW_TEST_COMMAND: python3 test_loopback.py
            #skipping PyPy and musllinux builds
