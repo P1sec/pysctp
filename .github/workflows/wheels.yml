@@ -23,6 +23,10 @@ jobs:
         run: python -m cibuildwheel --output-dir wheelhouse
         env:
            #CIBW_BEFORE_ALL_LINUX: apt-get update && apt-get install -y libpython3-dev libsctp-dev gcc make
+           # Build using the latest manylinux2014 release, instead of the cibuildwheel
+           # pinned version
+           CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2014_x86_64:latest
+           CIBW_MANYLINUX_I686_IMAGE: quay.io/pypa/manylinux2014_i686:latest
            CIBW_BEFORE_ALL_LINUX: yum install -y lksctp-tools-dev
            #for now just a quick test of loopback
            CIBW_TEST_COMMAND: python3 test_loopback.py
