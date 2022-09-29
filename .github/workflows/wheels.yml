@@ -1,0 +1,33 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, ubuntu-22.04]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Used to host cibuildwheel
+      - uses: actions/setup-python@v3
+
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel==2.10.2
+
+      - name: Install requirements
+        run: sudo apt-get update && sudo apt-get install -y libpython3-dev libsctp-dev gcc make
+
+      - name: Build wheels & test
+        run: python -m cibuildwheel --output-dir wheelhouse
+        env:
+           #for now just a quick test of loopback
+           CIBW_TEST_COMMAND: python3 test_loopback.py
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./wheelhouse/*.whl
