@@ -27,10 +27,11 @@ jobs:
            # pinned version
            CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2014_x86_64:latest
            CIBW_MANYLINUX_I686_IMAGE: quay.io/pypa/manylinux2014_i686:latest
-           CIBW_BEFORE_ALL_LINUX: yum install -y lksctp-tools-dev
+           CIBW_BEFORE_ALL_LINUX: YUM0=mirror.centos.org yum install -y lksctp-tools-dev
            #for now just a quick test of loopback
            CIBW_TEST_COMMAND: python3 test_loopback.py
-
+           #skipping PyPy and musllinux builds
+           CIBW_SKIP: pp* "*-musllinux*"
       - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl
