@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04]
+        os: [ubuntu-22.04]
 
     steps:
       - uses: actions/checkout@v3
@@ -22,7 +22,7 @@ jobs:
       - name: Build wheels & test
         run: python -m cibuildwheel --output-dir wheelhouse
         env:
-           CIBW_BEFORE_ALL: ./build_dependencies.sh
+           CIBW_BEFORE_ALL: apt-get update && apt-get install -y libpython3-dev libsctp-dev gcc make
            #for now just a quick test of loopback
            CIBW_TEST_COMMAND: python3 test_loopback.py
 
