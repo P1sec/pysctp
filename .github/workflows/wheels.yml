@@ -32,7 +32,7 @@ jobs:
              rm -f /var/cache/yum/timedhosts.txt &&
              yum install -y lksctp-tools-devel
            #for now just a quick test of loopback
-           CIBW_TEST_COMMAND: python3 test_loopback.py
+           CIBW_TEST_COMMAND: python3 {project}/test_loopback.py
            #skipping PyPy and musllinux builds
            CIBW_SKIP: pp* "*-musllinux*"
       - uses: actions/upload-artifact@v3
