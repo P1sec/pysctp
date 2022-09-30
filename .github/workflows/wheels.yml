@@ -16,8 +16,8 @@ jobs:
       # Used to host cibuildwheel
       - uses: actions/setup-python@v3
 
-      - name: Install cibuildwheel
-        run: python -m pip install cibuildwheel==2.10.2
+      - name: Install cibuildwheel & build
+        run: python -m pip install cibuildwheel==2.10.2 build
 
       - name: Build wheels & test
         run: python -m cibuildwheel --output-dir wheelhouse
@@ -35,6 +35,12 @@ jobs:
            CIBW_TEST_COMMAND: python3 {project}/test_loopback.py
            #skipping PyPy and musllinux builds
            CIBW_SKIP: "pp* *musllinux*"
+
+      - name: Build sdist
+        run: python -m build --sdist -o wheelhouse
+
       - uses: actions/upload-artifact@v3
         with:
-          path: ./wheelhouse/*.whl
+          path: |
+            ./wheelhouse/*.whl
+            ./wheelhouse/*.tar.gz
