@@ -34,7 +34,7 @@ jobs:
            #for now just a quick test of loopback
            CIBW_TEST_COMMAND: python3 {project}/test_loopback.py
            #skipping PyPy and musllinux builds
-           CIBW_SKIP: pp* "*-musllinux*"
+           CIBW_SKIP: "pp* *musllinux*"
       - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl
