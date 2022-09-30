@@ -28,7 +28,7 @@ jobs:
            CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2014_x86_64:latest
            CIBW_MANYLINUX_I686_IMAGE: quay.io/pypa/manylinux2014_i686:latest
            CIBW_BEFORE_ALL_LINUX: >
-             sed -i 's/exclude=.gov, facebook/exclude=.gov, facebook, mirror.es.its.nyu.edu/' /etc/yum/pluginconf.d/fastestmirror.conf &&
+             echo "exclude=mirror.es.its.nyu.edu" >> /etc/yum/pluginconf.d/fastestmirror.conf &&
              rm -f /var/cache/yum/timedhosts.txt &&
              yum install -y lksctp-tools-dev
            #for now just a quick test of loopback
