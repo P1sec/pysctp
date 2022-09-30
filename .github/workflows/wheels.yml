@@ -1,14 +1,14 @@
-name: Build
+name: Build, test wheels & Publish
 
 on: [push, pull_request]
 
 jobs:
-  build_wheels:
-    name: Build wheels on ${{ matrix.os }}
+  build_test_wheels:
+    name: Build & test wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-22.04]
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -44,3 +44,28 @@ jobs:
           path: |
             ./wheelhouse/*.whl
             ./wheelhouse/*.tar.gz
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    needs:
+      - build_test_wheels
+    steps:
+      - name: setup python ${{ env.DEFAULT_PYTHON }}
+        uses: actions/setup-python@v4
+      - name: download artifact
+        uses: actions/download-artifact@v3
+        with:
+          path: dist/
+      - name: publish built artifacts to test.pypi.org
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+          skip_existing: true
+      - name: publish built artifacts to pypi.org
+        if: ${{ startsWith(github.ref, 'refs/tag') }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
