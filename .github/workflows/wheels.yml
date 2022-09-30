@@ -55,6 +55,7 @@ jobs:
       - name: download artifact
         uses: actions/download-artifact@v3
         with:
+          name: artifact
           path: dist/
       - name: publish built artifacts to test.pypi.org
         uses: pypa/gh-action-pypi-publish@release/v1
