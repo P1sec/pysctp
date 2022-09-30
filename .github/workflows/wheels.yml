@@ -30,7 +30,7 @@ jobs:
            CIBW_BEFORE_ALL_LINUX: >
              echo "exclude=mirror.es.its.nyu.edu" >> /etc/yum/pluginconf.d/fastestmirror.conf &&
              rm -f /var/cache/yum/timedhosts.txt &&
-             yum install -y lksctp-tools-dev
+             yum install -y lksctp-tools-devel
            #for now just a quick test of loopback
            CIBW_TEST_COMMAND: python3 test_loopback.py
            #skipping PyPy and musllinux builds
