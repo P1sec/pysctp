@@ -17,6 +17,8 @@
  *
  * Elvis Pfützenreuter (elvis.pfutzenreuter@{gmail.com,indt.org.br})
  * Copyright (c) 2005 Instituto Nokia de Tecnologia
+ * Benoit Michau (benoit.michau@p1sec.com)
+ * Copyright (c) 2022 P1 Security
  */
 
 #define PY_SSIZE_T_CLEAN
@@ -29,7 +31,6 @@
 #include <memory.h>
 #include <string.h>
 #include <errno.h>
-//#include "_sctp.h"
 
 
 /* Python 2 and 3 initialization mess */

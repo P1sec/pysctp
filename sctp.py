@@ -18,6 +18,8 @@
 # 
 # Elvis Pfützenreuter (elvis.pfutzenreuter@{gmail.com,indt.org.br})
 # Copyright (c) 2005 Instituto Nokia de Tecnologia
+# Benoit Michau (benoit.michau@p1sec.com)
+# Copyright (c) 2022 P1 Security
 
 """
 Python bindings for SCTP. It is compatible with kernel-level SCTP
