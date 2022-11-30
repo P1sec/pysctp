@@ -480,7 +480,7 @@ def notification_factory(raw_notification):
 	received from the bottom-half (C language) of pysctp. The user
 	should never need to call this directly.
 
-	If the raw notification if of an unknown type, a "notification"
+	If the raw notification is of an unknown type, a "notification"
 	superclass object is returned instead, so the user has a chance
 	to test "type" and deal with that. A warning is sent to the 
 	stderr. It can well happen if SCTP is extended and the user is 
