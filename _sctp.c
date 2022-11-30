@@ -29,7 +29,7 @@
 #include <memory.h>
 #include <string.h>
 #include <errno.h>
-#include "_sctp.h"
+//#include "_sctp.h"
 
 
 /* Python 2 and 3 initialization mess */
@@ -55,6 +55,7 @@ static PyObject * error_out(PyObject *m) {
     return NULL;
 }
 
+/* All functions exported to Python declared here */
 
 static PyObject* getconstant(PyObject* dummy, PyObject* args);
 static PyObject* have_sctp_multibuf(PyObject* dummy, PyObject* args);
@@ -239,27 +240,8 @@ static PyMethodDef _sctp_methods[] =
 #endif
 }
 
-/*
 
-static PyModuleDef sctpmodule = {
-	PyModuleDef_HEAD_INIT,
-	"_sctp",
-	"SCTP protocol low-level bindings",
-	-1,
-	_sctpMethods,
-	NULL, NULL, NULL, NULL
-};
-
-PyMODINIT_FUNC PyInit__sctp(void)
-{
-	PyObject* m;
-	m = PyModule_Create(&sctpmodule);
-	if(m == NULL)
-		return NULL;
-	return m;
-};
-
-*/
+/* Real SCTP business starting here */
 
 typedef struct ktuple {
 	char* key;
@@ -337,6 +319,7 @@ static ktuple _constants[] =
 	{"SCTP_ADDR_REMOVED", SCTP_ADDR_REMOVED},
 	{"SCTP_ADDR_MADE_PRIM", SCTP_ADDR_MADE_PRIM},
 	{"SCTP_ADDR_ADDED", SCTP_ADDR_ADDED},
+	{"SCTP_ADDR_CONFIRMED", SCTP_ADDR_CONFIRMED},
 	{"SCTP_INACTIVE", SCTP_INACTIVE},
 	{"SCTP_ACTIVE", SCTP_ACTIVE},
 	{"SCTP_EMPTY", SCTP_EMPTY},

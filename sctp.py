@@ -337,6 +337,7 @@ class paddr_change(notification):
 	state_ADDR_REMOVED = _sctp.getconstant("SCTP_ADDR_REMOVED")
 	state_ADDR_ADDED = _sctp.getconstant("SCTP_ADDR_ADDED")
 	state_ADDR_MADE_PRIM = _sctp.getconstant("SCTP_ADDR_MADE_PRIM")
+	state_ADDR_CONFIRMED = _sctp.getconstant("SCTP_ADDR_CONFIRMED")
 
 	error_FAILED_THRESHOLD = assoc_change.error_FAILED_THRESHOLD
 	error_RECEIVED_SACK = assoc_change.error_RECEIVED_SACK
@@ -588,7 +589,7 @@ class event_subscribe(object):
 	def get_association(self):
 		return self.__get_property("_association")
 
-	def get_data_io(self, value):
+	def get_data_io(self):
 		return self.__get_property("_data_io")
 
 	def set_adaptation_layer(self, value):
@@ -756,7 +757,7 @@ class paddrparams(object):
 	sockaddr: the address this info came from, or where this information is going to
 		  be applied to. It *is* important even for TCP-style sockets.
 
-	hbinterval: heartbeat interval in milisseconds
+	hbinterval: heartbeat interval in millisseconds
 
 	pathmaxrxt: maximum number of retransmissions, after that this peer address
 		    is considered unreachable and another one will be tried.
@@ -813,7 +814,7 @@ class paddrparams(object):
 class paddrinfo(object):
 	"""
 	Peer Address information object class. The user should never need to 
-	instantiate this directly.  It is received via get_paddrinfo() method call.  It
+	instantiate this directly.  It is received via get_paddrinfo() method call. It
 	is read-only, you cannot set anything by passing this object.
 
 	Relevant attributes:
@@ -1213,7 +1214,7 @@ class sctpsocket(object):
 		msg: the actual data message. Since SCTP does not allow empty messages,
 		     an empty "msg" always means something special, either:
 
-		    	a) that "notif" contains an event notificatoin, if "flags" has 
+		    a) that "notif" contains an event notification, if "flags" has 
 			   FLAG_NOTIFICATION set;
 
 			b) that association is closing (for TCP-style sockets only)

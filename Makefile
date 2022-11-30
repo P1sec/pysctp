@@ -3,7 +3,7 @@ CFLAGS = -Wall `python-config --cflags` -fPIC
 LDFLAGS = `python-config --ldflags` -fPIC -shared -lsctp
 
 # When/if your favorite SCTP kernel impl is at least draft 10 compliant
-# CFLAGS = $(CFLAGS) -DSCTP_DRAFT10_LEVEL
+CFLAGS = $(CFLAGS) -DSCTP_DRAFT10_LEVEL
 
 CFLAGS += -DDEBUG
 
