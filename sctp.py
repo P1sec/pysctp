@@ -1116,7 +1116,7 @@ class sctpsocket(object):
 		return _sctp.getladdrs(self._sk.fileno(), assoc_id)
 
 	def sctp_send(self, msg, to=("",0), ppid=None, flags=0, stream=None, timetolive=None, context=0,
-	                    record_file_prefix="RECORD_sctp_traffic", datalogging = False):
+	                    record_file_prefix="RECORD_sctp_traffic", datalogging=False):
 		"""
 		Sends a SCTP message. While send()/sendto() can also be used, this method also
 		accepts some SCTP-exclusive metadata. Parameters:
@@ -1179,6 +1179,7 @@ class sctpsocket(object):
 			recordlog = open(recordfilename+"%d"%i, 'w')
 			recordlog.write(msg)
 			recordlog.close()
+		
 		return _sctp.sctp_send_msg(self._sk.fileno(), msg, to, ppid, flags, stream, timetolive, context)
 
 	def sctp_recv(self, maxlen):
