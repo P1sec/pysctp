@@ -232,6 +232,7 @@ class sndrcvinfo(object):
 		self.stream = 0
 		self.ssn = 0
 		self.flags = 0
+		self.ppid = 0
 		self.context = 0
 		self.timetolive = 0
 		self.tsn = 0
@@ -986,11 +987,10 @@ class sctpsocket(object):
 		 nature of SCTP, some implementations have it turned on by default, while TCP 
 		 is mandated to have it off by default.
 
-	adaptation: 32-bit value related to the "ppid" metadata field sent along each data
-		  message. If this property is different than zero, the configured value
-		  is sent via ADAPTION INDICATION event to the remote peer when a new 
-		  association is opened. This is intended to be used by telephony-related
-		  protocols.
+	adaptation: 32-bit value in network byte-order related to the "ppid" metadata field sent 
+		  along each data message. If this property is different than zero, the configured value 
+		  is sent via ADAPTION INDICATION event to the remote peer when a new association is opened.
+		  This is intended to be used by telephony-related protocols.
 
 	disable_fragments: if True, a message will never be fragmented in several datagrams.
 			   It means that message must fit in the PMTU datagram. Default is
@@ -1128,7 +1128,8 @@ class sctpsocket(object):
 
 		    WARNING: identifying destination by Association ID not implemented yet!
 
-		ppid: adaptation layer value, a 32-bit metadata that is sent along the message.
+		ppid: adaptation layer value, a 32-bit value in network byte-order, metadata that 
+		      is sent along the message.
 		      Default to 0.
 
 		flags: a bitmap of MSG_* flags. For example, MSG_UNORDERED indicates that 
