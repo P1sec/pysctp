@@ -23,7 +23,7 @@ import setuptools
 from distutils.core import setup, Extension
 
 setup(name='pysctp',
-      version='0.7.2',
+      version='0.7.3',
       license = "LGPL",
       description = 'pysctp is a python module for the SCTP protocol stack and library',
       long_description = 'pysctp is a python wrapper for the SCTP protocol stack and library for Linux systems: you need an SCTP-aware kernel and install the following packages (e.g. on debian): apt install libsctp-dev libsctp1 lksctp-tools',
