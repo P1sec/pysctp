@@ -1,11 +1,13 @@
 # PYTHON_VERSION = 2.5
-CFLAGS = -Wall `python-config --cflags` -fPIC
-LDFLAGS = `python-config --ldflags` -fPIC -shared -lsctp
-
 # When/if your favorite SCTP kernel impl is at least draft 10 compliant
-CFLAGS = $(CFLAGS) -DSCTP_DRAFT10_LEVEL
+#CFLAGS = -Wall `python-config --cflags` -fPIC -DSCTP_DRAFT10_LEVEL -DDEBUG
+# this is however not supported by recent kernel, e.g. some of the constants
+# have been renamed / changed
+#
+# If not
+CFLAGS = -Wall `python-config --cflags` -fPIC -DDEBUG
 
-CFLAGS += -DDEBUG
+LDFLAGS = `python-config --ldflags` -fPIC -shared -lsctp
 
 all: _sctp.so
 
