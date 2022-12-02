@@ -3,10 +3,10 @@ PySCTP - SCTP bindings for Python
 
 Elvis Pfützenreuter 
 Instituto Nokia de Tecnologia (http://www.indt.org.br)
-epx __AT__ epx.com.br
+epxx __AT__ epxx.co
 
 Philippe Langlois
-P1 Security (http://www.p1sec.com)
+P1 Security (https://www.p1sec.com)
 phil __AT__ p1sec.com
 
 Benoit Michau
@@ -29,21 +29,22 @@ In case you want to install the module explicitely for Python 2 or 3,
 just replace _python_ by _python2_ / _python3_ in the commands above.
 
 A pre-built package is also available for Python3 for the common Linux 
-distribution:
+distributions:
 pip install pysctp
 
-The _Makefile_ was used when installing with a very old Python version
-(Python2.5, 2.6...), and is not required anymore for building the package
+The _Makefile_ available was used when installing with very old versions
+of Python (2.5, 2.6...), and is not required anymore for building the package
 with a recent Python (Python 3.6, 3.7...).
+
 
 ======================================================================
 DEPENDENCIES:
 
 When building the project, the following dependencies are required e.g.
-on Ubuntu: libsctp-dev and python-dev
+on Debian / Ubuntu: libsctp-dev and python-dev
 (python2-dev or python3-dev for an explicit version of Python)
 
-You can automatically install dependencies for Debian/Ubuntu:
+You can automatically install dependencies for Debian / Ubuntu:
 make installdeps
 (take care with the Python version your are targeting, however)
 
@@ -56,7 +57,7 @@ It wraps the Linux SCTP kernel API, and extends the traditional socket interface
 allowing SCTP sockets to be used in most situations where a TCP or UDP socket
 would work, while preserving the unique characteristics of the protocol.
 
-For more information about SCTP, go to the IETF RFC 4960.
+For more information about SCTP, go to the IETF RFC 9260: https://www.rfc-editor.org/rfc/rfc9260
 For discussion, sources, bugs, go to http://github.com/p1sec/pysctp
 
 In a nutshell, PySCTP can be used as follows:
@@ -76,15 +77,16 @@ sk.close()
 ---------
 
 The autotest programs (e.g. test_local_cnx.py) are actually good examples 
-of pysctp usage.
+of pysctp usage. The SCTP echo server is also good for illustrating all the 
+IO and events notifications available when dealing with SCTP.
 
-The BSD/Sockets SCTP extensions are defined by an IETF draft
-(draft-ietf-tsvwg-sctpsocket-10.txt) and PySCTP tries to map those
-extensions very closely. So, to really take the most advantage of
-SCTP and PySCTP, you must understand how the API works. You can
-find advice about it in the draft itself (not incredibly easy to 
-understand though), as well the 3rd edition of Unix Network 
-Programming.
+The IETF RFC 6458 (https://www.rfc-editor.org/rfc/rfc6458.html) defines 
+a POSIX API for SCTP sockets. The Linux API mostly follows it, but still
+has some discrepancies in few cases. PySCTP targets the Linux API first,
+and may support alternative implementations with few changes. This is however
+untested.
+The Linux API itself has slightly evolved and been extended (e.g. between 4.16 
+and 4.17). Those "recent" changes are not reflected (yet) by PySCTP.
 
 
 ======================================================================
@@ -132,13 +134,15 @@ The translation to/from complex objects is done entirely in Python.
 ======================================================================
 Contributing
 
-Any contributions will be welcome, be it in terms of code, documentation or 
+Any contributions is welcome, be it in terms of code, documentation or 
 bug report.
 
 When opening an issue, please indicate the detailed configuration of your 
-environment: OS, kernel and Python versions; PySCTP commit or tagged version.
+environment: OS, kernel and Python versions, PySCTP commit or tagged version.
 Provide also a detailed description of your issue, with a code extract
-enabling to reproduce the issue.
+enabling to reproduce the issue, a pcap illustrating it, and more generally
+as much possible information to help identify precisely the root cause
+and solving it.
 
 
 ======================================================================
@@ -151,23 +155,24 @@ https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 ======================================================================
 History
 
-The original PySCTP library was developed by Elvis Pfützenreuter, starting
-in 2005 / 2006. At that time, SCTP was freshly introduced into Linux, 
-hence the library was developed with lksctp-utils 1.0.1 and kernel 2.6.10, 
-that come with Ubuntu Hoary.
+The original PySCTP library was developed by Elvis Pfützenreuter (https://epxx.co/),
+starting in 2005 / 2006. At that time, SCTP was freshly introduced into Linux, 
+hence the library was developed targeting lksctp-utils 1.0.1 and kernel 2.6.10, 
+that came with Ubuntu Hoary.
 
 Since then, the kernel API evolved, and PySCTP too, in order to support newer
-calls like connectx().
-In 2009/2010, Philippe Langlois headed to maintain the library, which is now
-supported by the P1 Security team since then.
+calls like connectx(). In 2009/2010, Philippe Langlois headed to maintain the 
+library, which is now supported by the P1 Security team since then.
+The Linux API has again slightly evolved in the last years, which changes are 
+not (yet) reflected in PySCTP.
 
 
 ======================================================================
 Credits
 
-Elvis Pfützenreuter <elvis.pfutzenreuter __AT__ indt.org.br>
-Philippe Langlois <phil __AT__ p1sec.com>
-Casimiro Daniel NPRI <CasimiroD  __AT__ npt.nuwc.navy.mil> - patch for new SCTP_* constants
-Domonkos P. Tomcsanyi and Aurelien Roose - pypi / github integration
+Elvis Pfützenreuter
+Philippe Langlois
+Casimiro Daniel NPRI (patch for new SCTP_* constants)
+Domonkos P. Tomcsanyi and Aurelien Roose (pypi / github integration)
 Benoit Michau
 
