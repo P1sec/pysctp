@@ -174,7 +174,7 @@ def get_addr_fam(addrs):
 # SCTP echo server
 #------------------------------------------------------------------------------#
 
-def server_stream(addrs, port, running):
+def server_stream(addrs, port, running, m3ua_asphs=False):
     """SCTP echo server with TCP-style socket, running in an endless loop
     """
     af = get_addr_fam(addrs)
@@ -259,6 +259,15 @@ def server_stream(addrs, port, running):
                 # echoing the received buffer to the client
                 if len(buf) > SCTP_WMAX:
                     log('Warning: trying to send buffer longer than WMAX')
+                if m3ua_asphs and buf[:2] == b'\x01\x00':
+                    if buf[2] == 0x03:
+                        log('M3UA ASP Up-Down-Beat handshake')
+                        # M3UA ASP Up-Down-Beat
+                        buf = buf[:3] + bytes([buf[3] + 3]) + buf[4:]
+                    elif buf[2] == 0x04:
+                        log('M3UA ASP Activate-Inactivate handshake')
+                        # M3UA ASP Activate-Inactivate
+                        buf = buf[:3] + bytes([buf[3] + 2]) + buf[4:]
                 try:
                     ret = cli.sctp_send(buf, ppid=notif.ppid, stream=notif.stream)
                 except Exception as err:
@@ -272,7 +281,7 @@ def server_stream(addrs, port, running):
     return 0
 
 
-def server_dgram(addrs, port, running):
+def server_dgram(addrs, port, running, m3ua_asphs=False):
     """SCTP echo server with UDP-style socket, running in an endless loop
     """
     af = get_addr_fam(addrs)
@@ -346,6 +355,15 @@ def server_dgram(addrs, port, running):
             # echoing the received buffer to the client
             if len(buf) > SCTP_WMAX:
                 log('Warning: trying to send buffer longer than WMAX')
+            if m3ua_asphs and buf[:2] == b'\x01\x00':
+                if buf[2] == 0x03:
+                    log('M3UA ASP Up-Down-Beat handshake')
+                    # M3UA ASP Up-Down-Beat
+                    buf = buf[:3] + bytes([buf[3] + 3]) + buf[4:]
+                elif buf[2] == 0x04:
+                    log('M3UA ASP Activate-Inactivate handshake')
+                    # M3UA ASP Activate-Inactivate
+                    buf = buf[:3] + bytes([buf[3] + 2]) + buf[4:]
             try:
                 ret = sk.sctp_send(buf, to=addr, ppid=notif.ppid, stream=notif.stream)
             except Exception as err:
@@ -364,15 +382,16 @@ def main():
     parser.add_argument('addrs', type=str, nargs='+', help='local address(es) to bind on')
     parser.add_argument('port', type=int, help='port to bind on')
     parser.add_argument('-u', action='store_true', help='run the SCTP server socket in UDP-style instead of TCP-style')
+    parser.add_argument('-m', action='store_true', help='support very basically M3UA ASP handshakes in responses')
     args = parser.parse_args()
     #
     running = Event()
     running.set()
     try:
         if args.u:
-            server_dgram(args.addrs, args.port, running)
+            server_dgram(args.addrs, args.port, running, args.m)
         else:
-            server_stream(args.addrs, args.port, running)
+            server_stream(args.addrs, args.port, running, args.m)
     except KeyboardInterrupt:
         log('CTRL+C: stopping')
         running.clear()
