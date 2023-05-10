@@ -588,7 +588,7 @@ class event_subscribe(object):
 	def get_association(self):
 		return self.__get_property("_association")
 
-	def get_data_io(self, value):
+	def get_data_io(self):
 		return self.__get_property("_data_io")
 
 	def set_adaptation_layer(self, value):
