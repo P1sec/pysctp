@@ -1663,7 +1663,8 @@ static PyObject* getladdrs(PyObject* dummy, PyObject* args)
 
 static PyObject* sctp_send_msg(PyObject* dummy, PyObject* args)
 {
-	int fd, msg_len, size_sent, ppid, flags, stream, ttl, context;
+	int fd, msg_len, size_sent, flags, stream, ttl, context;
+	int ppid;
 	const char *msg;
 	char *to;
 	int port;

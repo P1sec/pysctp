@@ -65,7 +65,7 @@ to avoid excessive namespace pollution.
 """
 
 from __future__ import print_function
-
+from socket     import *
 import socket
 import _sctp
 
@@ -1175,7 +1175,7 @@ class sctpsocket(object):
 			recordlog = open(recordfilename+"%d"%i, 'w')
 			recordlog.write(msg)
 			recordlog.close()
-		return _sctp.sctp_send_msg(self._sk.fileno(), msg, to, ppid, flags, stream, timetolive, context)
+		return _sctp.sctp_send_msg(self._sk.fileno(), msg, to, ntohl(ppid), flags, stream, timetolive, context)
 
 	def sctp_recv(self, maxlen):
 		"""
