@@ -154,6 +154,9 @@ static PyMethodDef _sctp_methods[] =
 
 /* CPython module init */
 
+// this is required to use the # variant when parsing arguments 
+#define PY_SSIZE_T_CLEAN
+
 static int _sctp_traverse(PyObject *m, visitproc visit, void *arg) {
     Py_VISIT(GETSTATE(m)->error);
     return 0;
