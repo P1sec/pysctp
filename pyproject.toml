@@ -4,8 +4,7 @@ name = "pysctp"
 version = "0.7.3"
 description = "pysctp is a python module for the SCTP protocol stack and library"
 readme = "README.rst"
-license = "LGPL-3.0-or-later"
-license-files = ["LICENSE"]
+license = {file = "LICENSE"}
 requires-python = ">=2.7"
 authors = [
   {name = "Elvis Pfutzenreuter", email = "epx@epx.com.br"},
