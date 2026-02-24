@@ -1,0 +1,29 @@
+
+[project]
+name = "pysctp"
+version = "0.7.3"
+description = "pysctp is a python module for the SCTP protocol stack and library"
+readme = "README.rst"
+license = "LGPL-3.0-or-later"
+license-files = ["LICENSE"]
+requires-python = ">=2.7"
+authors = [
+  {name = "Elvis Pfutzenreuter", email = "epx@epx.com.br"},
+]
+maintainers = [
+  {name = "Marin Moulinier"}
+]
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+     'Intended Audience :: Developers',
+     'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
+     'Programming Language :: C',
+     'Programming Language :: Python',
+     'Topic :: Software Development :: Libraries :: Python Modules',
+     'Topic :: System :: Networking'
+]
+
+[project.urls]
+Homepage = "https://github.com/P1sec/pysctp"
+Repository = "https://github.com/P1sec/pysctp"
+Issues = "https://github.com/P1sec/QCSuper/pysctp"
