@@ -49,14 +49,6 @@ jobs:
         with:
           name: artifact
           path: dist/
-      - name: publish built artifacts to test.pypi.org
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          verbose: true
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          repository_url: https://test.pypi.org/legacy/
-          skip_existing: true
       - name: publish built artifacts to pypi.org
         if: ${{ startsWith(github.ref, 'refs/tag') }}
         uses: pypa/gh-action-pypi-publish@release/v1
